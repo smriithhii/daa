@@ -622,3 +622,29 @@ int main()
 	}
 	return 0;
 }
+
+heap sort : py 
+
+def heapify(A,i,n):
+    l = 2*i+1
+    r = 2*i+2
+    largest = i
+    if l<n and A[l]>A[largest]:
+        largest = l
+    elif r<n and A[r]>A[largest]:
+        largest = r
+    if i!=largest:
+        A[largest],A[i] = A[i],A[largest]
+        heapify(A,largest,n)
+        
+def build_heap(A,n):
+    for i in range(n//2-1,-1,-1):
+        heapify(A,i,n)
+    for i in range(n-1,-1,-1):
+        A[i],A[0] = A[0],A[i]
+        heapify(A,0,i)
+        
+list_ = list(map(int,input('Enter a Sequence : ').split()))
+print('The Entered Sequence is : ',list_)
+build_heap(list_,len(list_)) 
+print('The Sorted Sequence is : ',list_)       
