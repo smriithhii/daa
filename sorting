@@ -191,6 +191,85 @@ print(array)
 mergeSort(array)
 print(array)
 
+mergesort : cpp
+
+#include <iostream>
+using namespace std;
+void merge(int array[], int const left, int const mid,int const right)
+{
+	auto const subArrayOne = mid - left + 1;
+	auto const subArrayTwo = right - mid;
+	auto *leftArray = new int[subArrayOne],*rightArray = new int[subArrayTwo];
+	for (auto i = 0; i < subArrayOne; i++)
+		leftArray[i] = array[left + i];
+	for (auto j = 0; j < subArrayTwo; j++)
+		rightArray[j] = array[mid + 1 + j];
+	auto indexOfSubArrayOne= 0, indexOfSubArrayTwo= 0;
+	int indexOfMergedArray= left;
+	while (indexOfSubArrayOne < subArrayOne&& indexOfSubArrayTwo < subArrayTwo)
+        {
+            if (leftArray[indexOfSubArrayOne]<= rightArray[indexOfSubArrayTwo]) {
+			array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
+			indexOfSubArrayOne++;
+		}
+		else {
+			array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
+			indexOfSubArrayTwo++;
+		}
+		indexOfMergedArray++;
+	}
+	while (indexOfSubArrayOne < subArrayOne)
+	{
+		array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
+		indexOfSubArrayOne++;
+		indexOfMergedArray++;
+	}
+	while (indexOfSubArrayTwo < subArrayTwo)
+	{
+		array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
+		indexOfSubArrayTwo++;
+		indexOfMergedArray++;
+	}
+	delete[] leftArray;
+	delete[] rightArray;
+}
+
+
+void mergeSort(int array[], int const begin, int const end)
+{
+	if (begin >= end)
+		return;
+
+	auto mid = begin + (end - begin) / 2;
+	mergeSort(array, begin, mid);
+	mergeSort(array, mid + 1, end);
+	merge(array, begin, mid, end);
+}
+
+
+void printArray(int A[], int size)
+{
+	for (auto i = 0; i < size; i++)
+		cout << A[i] << " ";
+}
+
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6, 7 };
+	auto arr_size = sizeof(arr) / sizeof(arr[0]);
+
+	cout << "Given array is \n";
+	printArray(arr, arr_size);
+
+	mergeSort(arr, 0, arr_size - 1);
+
+	cout << "\nSorted array is \n";
+	printArray(arr, arr_size);
+	return 0;
+}
+
+
+
 quick sort : py 
 
 def partition(arr,l,h):
@@ -341,6 +420,26 @@ int main()
     show_array(arr,n);
 }
 
+sel py :
+
+def selection_sort(a):
+    n=len(a)
+    for i in range(0,n-1):
+        minind=i
+        min=a[i]
+        for j in range (i+1,n):
+            if(a[j] <= min):
+                min=a[j]
+                minind=j
+        temp=a[i]
+        a[i]=min
+        a[minind]=temp
+    return a
+a=list(eval(input("Enter the list : ")))
+print("Unsorted List  : ",a)
+a=selection_sort(a)
+print("Sorted List    : ",a)
+
 radix py another prgm:
 
 def countingSort(array,place):
@@ -486,79 +585,40 @@ int main()
 	return 0;
 }
 
-mergesort : cpp
+quick cpp:
 
-#include <iostream>
+#include<iostream>
 using namespace std;
-void merge(int array[], int const left, int const mid,int const right)
+int Partition(int a[],int p,int r)
 {
-	auto const subArrayOne = mid - left + 1;
-	auto const subArrayTwo = right - mid;
-	auto *leftArray = new int[subArrayOne],*rightArray = new int[subArrayTwo];
-	for (auto i = 0; i < subArrayOne; i++)
-		leftArray[i] = array[left + i];
-	for (auto j = 0; j < subArrayTwo; j++)
-		rightArray[j] = array[mid + 1 + j];
-	auto indexOfSubArrayOne= 0, indexOfSubArrayTwo= 0;
-	int indexOfMergedArray= left;
-	while (indexOfSubArrayOne < subArrayOne&& indexOfSubArrayTwo < subArrayTwo)
+    int i = p-1;
+    for(int j=p;j<r;j++)
+    {
+        if(a[j]<=a[r])
         {
-            if (leftArray[indexOfSubArrayOne]<= rightArray[indexOfSubArrayTwo]) {
-			array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
-			indexOfSubArrayOne++;
-		}
-		else {
-			array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
-			indexOfSubArrayTwo++;
-		}
-		indexOfMergedArray++;
-	}
-	while (indexOfSubArrayOne < subArrayOne)
-	{
-		array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
-		indexOfSubArrayOne++;
-		indexOfMergedArray++;
-	}
-	while (indexOfSubArrayTwo < subArrayTwo)
-	{
-		array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
-		indexOfSubArrayTwo++;
-		indexOfMergedArray++;
-	}
-	delete[] leftArray;
-	delete[] rightArray;
+            i++;
+            swap(a[i],a[j]);
+        }
+    }
+    swap(a[i+1],a[r]);
+    return i+1;
 }
-
-
-void mergeSort(int array[], int const begin, int const end)
+void QuickSort(int a[],int p,int r)
 {
-	if (begin >= end)
-		return;
-
-	auto mid = begin + (end - begin) / 2;
-	mergeSort(array, begin, mid);
-	mergeSort(array, mid + 1, end);
-	merge(array, begin, mid, end);
+    if(p<=r)
+    {
+        int q = Partition(a,p,r);
+        QuickSort(a,p,q-1);
+        QuickSort(a,q+1,r);
+    }
 }
-
-
-void printArray(int A[], int size)
-{
-	for (auto i = 0; i < size; i++)
-		cout << A[i] << " ";
-}
-
 int main()
 {
-	int arr[] = { 12, 11, 13, 5, 6, 7 };
-	auto arr_size = sizeof(arr) / sizeof(arr[0]);
-
-	cout << "Given array is \n";
-	printArray(arr, arr_size);
-
-	mergeSort(arr, 0, arr_size - 1);
-
-	cout << "\nSorted array is \n";
-	printArray(arr, arr_size);
+	int a[] = {9,3,4,2,1,8};
+	QuickSort(a,0,5);
+	for (int i = 0; i<=5; i++)
+    {
+		cout << a[i] << " ";
+	}
 	return 0;
 }
