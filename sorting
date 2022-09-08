@@ -1,0 +1,564 @@
+radix : py 
+
+def Radixsort(a):
+    d=1
+    while max(a) // d> 0:
+        countingsort(a,d)
+        d *= 10
+def countingsort(a,d):
+    k=len(a)
+    b=[0]*k   #sorted
+    c=[0]*10  #cummulative
+    for i in range (0,k):
+        ind=(a[i]//d)%10
+        c[ind]=c[ind]+1
+    for i in range (0,10):
+        c[i]=c[i]+c[i-1]
+    for i in range (k-1,-1,-1):
+        ind=(a[i]//d)%10
+        b[c[ind]-1]=a[i]  
+        c[ind]=c[ind]-1
+    for i in range(0, k):
+        a[i] = b[i]
+    return a
+a=list(eval(input("Enter the list : ")))
+Radixsort(a)
+print(a)
+
+radix sort : py 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMax(int arr[],int n)
+{
+    int max = arr[0];
+    for( int i=1; i<n ; i++ )
+        if( arr[i] > max )
+            max = arr[i];
+    return max;        
+}
+
+void countingSort(int arr[],int s,int place)
+{
+    const int max = 10;
+    int op[s];
+    int count[max]={0} ;
+
+    //Adding the count of the elements with respect to their places.
+    for( int i=0; i<s ; i++ )
+        count[(arr[i] / place) % 10 ]++;
+
+    //Finding the cumulative sum of the count array.
+    for( int i=1 ; i<max ; i++ )
+        count[i] += count[i-1];
+
+    //Putting the elements with respect to their count & position.
+    for( int i=s-1 ; i>=0 ; i-- )
+    {
+        op[count[(arr[i] / place) % 10] - 1 ] = arr[i];
+        count[(arr[i] / place) % 10]--;
+    }       
+
+    for( int i=0; i<s ; i++ )
+        arr[i] = op[i];
+}
+
+void radixSort(int arr[],int s)
+{
+    int max = getMax(arr,s);
+
+    for( int place=1 ; max/place > 0 ; place*=10 )
+        countingSort(arr,s,place);
+}
+
+void show_array(int arr[],int n)
+{
+    cout<<"\tArray : ";
+    for( int i=0 ; i<n ; i++ )
+        cout<<arr[i]<<" ";
+    cout<<endl;    
+}
+
+int main()
+{
+    system("cls");
+    int arr[]={121, 432, 564, 23, 1, 45, 788};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    show_array(arr,n);
+    radixSort(arr,n);
+    show_array(arr,n);
+
+    return 0;
+}
+
+insertion sort : cpp
+
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+//Insertion sort
+void Insertion_Sort(int arr[],int n)
+{
+    for (int j=1;j<n;j++)
+    {
+        int key=arr[j];
+        int i=j-1;
+        while(i>=0 && arr[i] >=key)
+        {
+            arr[i+1] =arr[i];
+            i=i-1;
+        }
+        arr[i+1]=key;
+    }
+}
+int main()
+{
+    int n1;
+    //inputing n1 and n2
+    cout << "Enter n1 : ";
+    cin >> n1 ;
+    int a[n1];
+    //Get the array
+    for (int i=0;i<n1;i++)
+    {
+        cin >> a[i];
+    }
+    Insertion_Sort(a,n1);
+    for (int i=0;i<n1;i++)
+    {
+        cout << a[i] << "  ";
+    }
+}
+
+insertion sort : py
+
+def insertion_sort(arr):
+    for i in range(1,len(arr)):
+        key= arr[i]
+        j = i - 1
+        while( j>=0 and key<arr[j] ):
+            arr[j+1]=arr[j]
+            j = j - 1
+        arr[j+1]=key
+  
+
+array=[9,5,1,4,3]
+sub=[]
+sub=insertion_sort(array)
+print(array)
+
+merge sort:py
+ 
+ def mergeSort(array):
+
+    if( len(array) > 2):
+        r = len(array)//2
+        L = array[:r]
+        R = array[r:]
+
+        mergeSort(L)
+        mergeSort(R)
+
+        i = j = k = 0
+
+        while( i<len(L) and j<len(R) ):
+            if( ord(L[i]) <= ord(R[j]) ):
+                array[k] = L[i]
+                i+=1 
+            else :
+                array[k] = R[j]
+                j+=1
+            k+=1
+
+        while( i<len(L) ):
+              array[k] = L[i]
+              i+=1
+              k+=1
+
+        while( j<len(R) ):
+              array[k] = R[j]
+              j+=1
+              k+=1                    
+
+def printarray(array):
+    for i in (array):
+        print(i , end=' ')
+
+array = ['v','s','a','k','m','r']
+print(array)
+mergeSort(array)
+print(array)
+
+quick sort : py 
+
+def partition(arr,l,h):
+    i,j = l,h
+    pvt = arr[l]
+   
+    while( i<j ):
+        while True:
+            if( arr[i] <= pvt ):
+                i+=1
+            else :
+                break    
+        while True:
+            if( arr[j] > pvt ):
+                j-=1
+            else :
+                break
+
+        if( i<j ):
+            arr[i],arr[j] = arr[j],arr[i]
+
+    arr[l],arr[j] = arr[j],arr[l]
+    return j  
+
+
+
+
+def quick_sort(arr,l,h):
+
+    if( l<h ):
+        pvt = partition(arr,l,h)
+        quick_sort(arr, l, pvt-1)
+        quick_sort(arr, pvt+1, h)
+
+
+def main():
+    arr = [45,45,4,12,23,16,9,21,14,10,8,324,1]
+    print("\n\nUnsorted Array : ",arr,"\n")
+
+    quick_sort(arr, 0, len(arr)-1)
+
+    print("Sorted Array : ",arr,"\n") 
+    
+main()
+
+
+heap sort : cpp
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void heapify(int arr[],int n,int i)
+{
+    int max_index = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+
+    if( l<n && arr[l]>arr[max_index] )
+        max_index = l;
+                
+    if( r<n && arr[r]>arr[max_index] )
+        max_index = r ;
+
+    if( max_index!=i )
+    {
+       swap(arr[max_index],arr[i]);
+       heapify(arr,n,max_index);
+    }
+                
+}
+
+void build_maxheap(int arr[],int n)
+{
+    for( int i = (n/2)- 1 ; i>=0 ; i--)
+        heapify(arr,n,i);
+}
+
+
+void heapsort(int arr[],int n)
+{
+    build_maxheap(arr,n);
+    for( int i=n-1 ; i>=0 ; i-- )
+    {
+        swap(arr[0],arr[i]);
+        heapify(arr,i,0);
+    }
+}
+
+void show_array(int arr[],int n)
+{
+    cout<<"\tArray : ";
+    for( int i=0 ; i<n ; i++ )
+        cout<<arr[i]<<" ";
+    cout<<endl;    
+}
+
+
+int main()
+{
+    system("cls");
+    int a[] = {48, 10, 23, 43, 28, 56,76,3,34,556,3,5,26, 1};  
+    int n = sizeof(a)/sizeof(a[0]);
+    
+    show_array(a,n);
+    heapsort(a,n);
+    show_array(a,n);
+
+    return 0;
+}
+
+selection sort : cpp
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void selection_sort(int arr[],int n)
+{
+    for( int i=0; i<n-1 ; i++)
+    {
+        int low = i;
+        for( int j=i+1 ; j<n ; j++)
+            if( arr[j]<arr[low] )
+                low = j; 
+        swap(arr[i],arr[low]);
+    }
+}
+
+void show_array(int arr[],int n)
+{
+    cout<<"\tArray : ";
+    for( int i=0 ; i<n ; i++ )
+        cout<<arr[i]<<" ";
+    cout<<endl;    
+}
+
+
+int main()
+{
+    system("cls");
+    int arr[]={4,9,1,7,3,6};
+    int n = sizeof(arr)/sizeof(arr[0]);
+
+    show_array(arr,n);
+
+    selection_sort(arr,n);
+
+    show_array(arr,n);
+}
+
+radix py another prgm:
+
+def countingSort(array,place):
+    size = len(array)
+    op = [0]*size
+    count = [0]*10
+    
+    for i in range(0,size):
+        index = array[i]//place
+        count[index % 10] += 1
+
+    for i in range(1,10):
+        count[i]  += count[i-1] 
+
+    i = size - 1
+    for i in range(size-1,-1,-1):
+        index = array[i]//place
+        op[ count[index%10] - 1 ] = array[i]
+        count[index%10] -= 1
+    
+
+    for i in range(0,size):
+        array[i] = op[i]
+
+
+def radix_sort(array):
+    max_element = max(array)
+    place = 1
+    while( max_element//place > 1 ):
+        countingSort(array, place)
+        place *=10
+        
+
+
+array = [121, 432, 564, 23, 1, 45, 788]
+
+print(array)
+
+radix_sort(array)
+
+print(array)
+
+bfs : py 
+
+import collections
+
+def BFS_search(graph,root):
+
+    queue = collections.deque([root])
+    visited = set()
+    visited.add(root)
+
+    while queue:
+
+        vertex = queue.popleft()
+        print(vertex , end=' ')
+
+        for new in graph[vertex]:
+            if new not in visited:
+                visited.add(new)
+                queue.append(new)
+
+bfs recursive : py 
+
+graph = {0: [1, 2], 1: [2], 2: [3], 3: [1, 2]}
+print("BFS OF GRAPH : ")
+BFS_search(graph, 2)
+
+def bfs(graph,ele):
+    found.append(ele)
+    if len(q)!=0 :
+        poped=q.pop(0)
+        print(poped)
+        for j in graph[poped]:
+            if j not in found:
+                found.append(j)
+                q.append(j)
+            bfs(graph,j)
+graph = {1:[2,3],2:[1,4],3:[1,5],4:[2,5],5:[3,4,6],6:[5]}
+ele=input("Enter the 1st node : ")
+found=[]
+q=[ele]
+bfs(graph,ele)
+
+dfs : cpp
+
+// C++ program to print DFS traversal from
+// a given vertex in a given graph
+#include <bits/stdc++.h>
+using namespace std;
+
+// Graph class represents a directed graph
+// using adjacency list representation
+class Graph {
+public:
+	map<int, bool> visited;
+	map<int, list<int> > adj;
+
+	// function to add an edge to graph
+	void addEdge(int v, int w);
+
+	// DFS traversal of the vertices
+	// reachable from v
+	void DFS(int v);
+};
+
+void Graph::addEdge(int v, int w)
+{
+	adj[v].push_back(w); // Add w to v’s list.
+}
+
+void Graph::DFS(int v)
+{
+	// Mark the current node as visited and
+	// print it
+	visited[v] = true;
+	cout << v << " ";
+
+	// Recur for all the vertices adjacent
+	// to this vertex
+	list<int>::iterator i;
+	for (i = adj[v].begin(); i != adj[v].end(); ++i)
+		if (!visited[*i])
+			DFS(*i);
+}
+
+// Driver code
+int main()
+{
+	// Create a graph given in the above diagram
+	Graph g;
+	g.addEdge(0, 1);
+	g.addEdge(0, 2);
+	g.addEdge(1, 2);
+	g.addEdge(2, 0);
+	g.addEdge(2, 3);
+	g.addEdge(3, 3);
+
+	cout << "Following is Depth First Traversal"
+			" (starting from vertex 2) \n";
+	g.DFS(2);
+
+	return 0;
+}
+
+selection sort : cpp
+
+#include <iostream>
+using namespace std;
+void merge(int array[], int const left, int const mid,int const right)
+{
+	auto const subArrayOne = mid - left + 1;
+	auto const subArrayTwo = right - mid;
+	auto *leftArray = new int[subArrayOne],*rightArray = new int[subArrayTwo];
+	for (auto i = 0; i < subArrayOne; i++)
+		leftArray[i] = array[left + i];
+	for (auto j = 0; j < subArrayTwo; j++)
+		rightArray[j] = array[mid + 1 + j];
+	auto indexOfSubArrayOne= 0, indexOfSubArrayTwo= 0;
+	int indexOfMergedArray= left;
+	while (indexOfSubArrayOne < subArrayOne&& indexOfSubArrayTwo < subArrayTwo)
+        {
+            if (leftArray[indexOfSubArrayOne]<= rightArray[indexOfSubArrayTwo]) {
+			array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
+			indexOfSubArrayOne++;
+		}
+		else {
+			array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
+			indexOfSubArrayTwo++;
+		}
+		indexOfMergedArray++;
+	}
+	while (indexOfSubArrayOne < subArrayOne)
+	{
+		array[indexOfMergedArray]= leftArray[indexOfSubArrayOne];
+		indexOfSubArrayOne++;
+		indexOfMergedArray++;
+	}
+	while (indexOfSubArrayTwo < subArrayTwo)
+	{
+		array[indexOfMergedArray]= rightArray[indexOfSubArrayTwo];
+		indexOfSubArrayTwo++;
+		indexOfMergedArray++;
+	}
+	delete[] leftArray;
+	delete[] rightArray;
+}
+
+
+void mergeSort(int array[], int const begin, int const end)
+{
+	if (begin >= end)
+		return;
+
+	auto mid = begin + (end - begin) / 2;
+	mergeSort(array, begin, mid);
+	mergeSort(array, mid + 1, end);
+	merge(array, begin, mid, end);
+}
+
+
+void printArray(int A[], int size)
+{
+	for (auto i = 0; i < size; i++)
+		cout << A[i] << " ";
+}
+
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6, 7 };
+	auto arr_size = sizeof(arr) / sizeof(arr[0]);
+
+	cout << "Given array is \n";
+	printArray(arr, arr_size);
+
+	mergeSort(arr, 0, arr_size - 1);
+
+	cout << "\nSorted array is \n";
+	printArray(arr, arr_size);
+	return 0;
+}
