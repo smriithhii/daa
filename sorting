@@ -25,7 +25,7 @@ a=list(eval(input("Enter the list : ")))
 Radixsort(a)
 print(a)
 
-radix sort : py 
+radix sort : cpp 
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -486,7 +486,7 @@ int main()
 	return 0;
 }
 
-selection sort : cpp
+mergesort : cpp
 
 #include <iostream>
 using namespace std;
